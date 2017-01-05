@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+				  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+				  xmlns:tns="http://www.charter.com/enterprise/address" 
+				  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+				  xmlns:ns1="http://schemas.xmlsoap.org/soap/http" 
+				  name="EnterpriseAddressSoapEndpointImplService" 
+				  targetNamespace="http://www.charter.com/enterprise/address">
+  <wsdl:types>
+	<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+			   xmlns:tns="http://www.charter.com/enterprise/address" 
+			   attributeFormDefault="unqualified" 
+			   elementFormDefault="unqualified" 
+			   targetNamespace="http://www.charter.com/enterprise/address">
+			   
+	  <xs:element name="findAddressesRequest" type="tns:findStreetAddressesRequest"/>
+	  <xs:element name="findAddressesResponse" type="tns:findStreetAddressesResponse"/>  
+	  <xs:element name="charterHeaderInputInfo" nullable="true" type="tns:standardInputHeader"/>
+	  <xs:element name="EnterpriseAddressServiceException" type="tns:EnterpriseAddressServiceException"/>
+	  
+	  <xs:complexType abstract="true" name="address">
+		<xs:sequence>		  
+		  <xs:element name="addressSubType" type="tns:addressSubType"/>
+		  <xs:element minOccurs="0" name="id" type="xs:long"/>
+		  <xs:element minOccurs="0" name="sourceSystemAddressId" type="xs:string"/>
+		</xs:sequence>
+	  </xs:complexType>
+	  
+	  <xs:complexType name="addressSubType">
+		<xs:sequence>
+		  <xs:element minOccurs="0" name="addressSubTypeDescription" type="xs:string"/>
+		  <xs:element name="id" type="xs:string"/>
+		</xs:sequence>
+	  </xs:complexType>
+	  <xs:complexType name="findStreetAddressesRequest">
+		<xs:sequence>
+		  <xs:element name="addressLine1Text" type="xs:string"/>
+		  <xs:element minOccurs="0" name="addressLine2Text" type="xs:string"/>
+		  <xs:element minOccurs="0" name="addressLine3Text" type="xs:string"/>
+		  <xs:element minOccurs="0" name="cityName" type="xs:string"/>
+		  <xs:element minOccurs="0" name="territory" type="xs:string"/>
+		  <xs:element name="zipCode" type="xs:string"/>
+		</xs:sequence>
+	  </xs:complexType>
+	  <xs:complexType name="findStreetAddressesResponse">
+		<xs:sequence>
+		  <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:streetAddress"/>
+		  <xs:element minOccurs="0" name="charterHeaderOutputInfo" type="tns:standardOutputHeader"/>
+		</xs:sequence>
+	  </xs:complexType>
+	  <xs:complexType name="streetAddress">
+		<xs:complexContent>
+		  <xs:extension base="tns:address">
+			<xs:sequence>
+			  <xs:element minOccurs="0" name="addressLine1Text" type="xs:string"/>
+			  <xs:element minOccurs="0" name="addressLine2Text" type="xs:string"/>
+			  <xs:element minOccurs="0" name="addressLine3Text" type="xs:string"/>
+			  <xs:element minOccurs="0" name="carrierRouteText" type="xs:string"/>
+			  <xs:element minOccurs="0" name="cityName" type="xs:string"/>
+			  <xs:element minOccurs="0" name="countryCode" type="xs:string"/>
+			  <xs:element minOccurs="0" name="fullPostalCodeText" type="xs:string"/>          
+			  <xs:element minOccurs="0" name="territoryCode" type="xs:string"/>
+			</xs:sequence>
+		  </xs:extension>
+		</xs:complexContent>
+	  </xs:complexType>
+	  <xs:complexType name="standardInputHeader">
+		<xs:sequence>
+		  <xs:element name="clientIp" type="xs:string"/>
+		  <xs:element name="clientHostName" type="xs:string"/>
+		  <xs:element name="clientCallingService" type="xs:string"/>
+		  <xs:element name="auditUser" type="xs:string"/>
+		  <xs:element name="transactionId" type="xs:string"/>
+		  <xs:element minOccurs="0" name="overrideCache" type="xs:boolean"/>
+		</xs:sequence>
+	  </xs:complexType>
+	  <xs:complexType name="standardOutputHeader">
+		<xs:sequence>
+		  <xs:element minOccurs="0" name="auditUser" type="xs:string"/>
+		  <xs:element minOccurs="0" name="server" type="xs:string"/>
+		  <xs:element minOccurs="0" name="transactionId" type="xs:string"/>
+		</xs:sequence>
+	  </xs:complexType>
+	  
+	  <xs:complexType name="EnterpriseAddressServiceException">
+	    <xs:sequence>
+	      <xs:element minOccurs="0" name="message" type="xs:string"/>
+	    </xs:sequence>
+	  </xs:complexType>
+	</xs:schema>
+  </wsdl:types>
+  
+  <wsdl:message name="findAddressesRes">
+    <wsdl:part element="tns:findAddressesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="EnterpriseAddressServiceException">
+    <wsdl:part element="tns:EnterpriseAddressServiceException" name="EnterpriseAddressServiceException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="findAddressesReq">
+    <wsdl:part element="tns:findAddressesRequest" name="parameters">
+    </wsdl:part>
+    <wsdl:part element="tns:charterHeaderInputInfo" name="charterHeaderInputInfo">
+    </wsdl:part>
+  </wsdl:message>
+  
+  <wsdl:portType name="EnterpriseAddressDataService">    
+    <wsdl:operation name="findAddresses">
+      <wsdl:input message="tns:findAddressesReq" name="findAddressesReq"></wsdl:input>
+      <wsdl:output message="tns:findAddressesRes" name="findAddressesRes"></wsdl:output>
+      <wsdl:fault message="tns:EnterpriseAddressServiceException" name="EnterpriseAddressServiceException"></wsdl:fault>
+    </wsdl:operation>   
+  </wsdl:portType>
+  <wsdl:binding name="EnterpriseAddressSoapEndpointImplServiceSoapBinding" type="tns:EnterpriseAddressDataService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>    
+    <wsdl:operation name="findAddresses">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="findAddressesReq">
+        <soap:header message="tns:findAddressesReq" part="charterHeaderInputInfo" use="literal"></soap:header>
+        <soap:body parts="parameters" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="findAddressesRes">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="EnterpriseAddressServiceException">
+        <soap:fault name="EnterpriseAddressServiceException" use="literal"/>
+      </wsdl:fault>   
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="EnterpriseAddressSoapEndpointImplService">
+    <wsdl:port binding="tns:EnterpriseAddressSoapEndpointImplServiceSoapBinding" name="EnterpriseAddressDataServicePort">
+      <soap:address location="http://localhost:11/enterprise-address-service/services/address"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
