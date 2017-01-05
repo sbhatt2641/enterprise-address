@@ -60,7 +60,7 @@
                                     <wsdlLocation>classpath:wsdl/address.wsdl</wsdlLocation>
                                      <extraargs>
 					                    <extraarg>-clientjar</extraarg>
-					                    <extraarg>address.jar</extraarg>        								
+					                    <extraarg>address-client.jar</extraarg>        								
 					                </extraargs>
                                 </wsdlOption>
                             </wsdlOptions>

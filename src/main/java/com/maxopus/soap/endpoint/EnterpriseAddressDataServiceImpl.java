@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.charter.enterprise.address.EnterpriseAddressDataService;
-import com.charter.enterprise.address.EnterpriseAddressServiceException_Exception;
-import com.charter.enterprise.address.FindStreetAddressesRequest;
-import com.charter.enterprise.address.FindStreetAddressesResponse;
-import com.charter.enterprise.address.ObjectFactory;
-import com.charter.enterprise.address.StandardInputHeader;
-import com.charter.enterprise.address.StreetAddress;
+import com.maxopus.enterprise.address.EnterpriseAddressDataService;
+import com.maxopus.enterprise.address.EnterpriseAddressServiceException_Exception;
+import com.maxopus.enterprise.address.FindStreetAddressesRequest;
+import com.maxopus.enterprise.address.FindStreetAddressesResponse;
+import com.maxopus.enterprise.address.ObjectFactory;
+import com.maxopus.enterprise.address.StandardInputHeader;
+import com.maxopus.enterprise.address.StreetAddress;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class EnterpriseAddressDataServiceImpl implements  EnterpriseAddressDataService{

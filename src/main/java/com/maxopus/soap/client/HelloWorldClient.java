@@ -7,11 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.charter.enterprise.address.EnterpriseAddressDataService;
-import com.charter.enterprise.address.EnterpriseAddressServiceException_Exception;
-import com.charter.enterprise.address.FindStreetAddressesRequest;
-import com.charter.enterprise.address.FindStreetAddressesResponse;
-import com.charter.enterprise.address.ObjectFactory;
+import com.maxopus.enterprise.address.EnterpriseAddressDataService;
+import com.maxopus.enterprise.address.EnterpriseAddressServiceException_Exception;
+import com.maxopus.enterprise.address.FindStreetAddressesRequest;
+import com.maxopus.enterprise.address.FindStreetAddressesResponse;
+import com.maxopus.enterprise.address.ObjectFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component

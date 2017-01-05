@@ -1,17 +1,17 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 				  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
-				  xmlns:tns="http://www.charter.com/enterprise/address" 
+				  xmlns:tns="http://www.maxopus.com/enterprise/address" 
 				  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
 				  xmlns:ns1="http://schemas.xmlsoap.org/soap/http" 
 				  name="EnterpriseAddressSoapEndpointImplService" 
-				  targetNamespace="http://www.charter.com/enterprise/address">
+				  targetNamespace="http://www.maxopus.com/enterprise/address">
   <wsdl:types>
 	<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-			   xmlns:tns="http://www.charter.com/enterprise/address" 
+			   xmlns:tns="http://www.maxopus.com/enterprise/address" 
 			   attributeFormDefault="unqualified" 
 			   elementFormDefault="unqualified" 
-			   targetNamespace="http://www.charter.com/enterprise/address">
+			   targetNamespace="http://www.maxopus.com/enterprise/address">
 			   
 	  <xs:element name="findAddressesRequest" type="tns:findStreetAddressesRequest"/>
 	  <xs:element name="findAddressesResponse" type="tns:findStreetAddressesResponse"/>  
