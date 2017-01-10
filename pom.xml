@@ -63,6 +63,10 @@
 					                    <extraarg>address-client.jar</extraarg>        								
 					                </extraargs>
                                 </wsdlOption>
+                                <!-- <wsdlOption>
+                                    <wsdl>${project.basedir}/src/main/resources/wsdl/QueueService_Multiple_Services.wsdl</wsdl>
+                                    <wsdlLocation>classpath:wsdl/QueueService_Multiple_Services.wsdl</wsdlLocation>                                     
+                                </wsdlOption> -->
                             </wsdlOptions>
                         </configuration>
                         <goals>

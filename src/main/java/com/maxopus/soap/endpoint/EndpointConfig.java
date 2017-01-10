@@ -15,10 +15,16 @@ public class EndpointConfig {
     private Bus bus;
 
     @Bean
-    public Endpoint endpoint() {
-        EndpointImpl endpoint = new EndpointImpl(bus,
-                new EnterpriseAddressDataServiceImpl());
+    public Endpoint addressEndpoint() {
+        EndpointImpl endpoint = new EndpointImpl(bus, new EnterpriseAddressDataServiceImpl());
         endpoint.publish("/address");
+        return endpoint;
+    }
+    
+    @Bean
+    public Endpoint serviceAbilityEndpoint() {
+        EndpointImpl endpoint = new EndpointImpl(bus, new EnterpriseServiceAbilityDataServiceImpl());
+        endpoint.publish("/serviceability");
         return endpoint;
     }
 }
