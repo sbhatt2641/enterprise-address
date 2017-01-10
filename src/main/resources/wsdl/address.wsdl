@@ -248,12 +248,12 @@
   </wsdl:binding>
   <wsdl:service name="EnterpriseAddressSoapEndPointImplService">
     <wsdl:port name="EnterpriseAddressDataServicePort" binding="tns:EnterpriseAddressSoapEndpointImplServiceSoapBinding">
-      <soap:address location="http://localhost:11/enterprise-service/services/address"/>
+      <soap:address location="http://localhost:12/enterprise-service/services/address"/>
     </wsdl:port>    
   </wsdl:service>
   <wsdl:service name="EnterpriseSercviceAbilitySoapEndPointImplService">
     <wsdl:port name="EnterpriseServiceAbilityDataServicePort" binding="tns:EnterpriseSercviceAbilityBinding">
-      <soap:address location="http://localhost:11/enterprise-service/services/serviceability"/>
+      <soap:address location="http://localhost:12/enterprise-service/services/serviceability"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
