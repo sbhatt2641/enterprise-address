@@ -9,25 +9,61 @@ import com.maxopus.enterprise.services.EnterpriseAddressDataService;
 import com.maxopus.enterprise.services.EnterpriseAddressServiceException;
 import com.maxopus.enterprise.services.address.ObjectFactory;
 import com.maxopus.enterprise.services.address.StreetAddress;
+import com.maxopus.enterprise.services.address.StreetAddressIdRequest;
+import com.maxopus.enterprise.services.address.StreetAddressIdResponse;
 import com.maxopus.enterprise.services.address.StreetAddressRequest;
 import com.maxopus.enterprise.services.address.StreetAddressResponse;
 import com.maxopus.enterprise.services.common.StandardInputHeader;
 
 public class EnterpriseAddressDataServiceImpl implements  EnterpriseAddressDataService{
 
+	private final static String DEFAULT_SEARCH_VALUE = "12443 Whisper";
+	
 	@Override
 	public StreetAddressResponse findAddresses(StreetAddressRequest parameters, 
 											   StandardInputHeader charterHeaderInput) throws EnterpriseAddressServiceException {
-		ObjectFactory factory = new ObjectFactory();
+		if(parameters == null || parameters.getAddressLine1Text() == null)
+			throw new EnterpriseAddressServiceException("StreetAddressRequest/addressLine1Text cannot be null.");
+		
 		ObjectMapper oMapper = new ObjectMapper(); 
 		@SuppressWarnings("unchecked")
 		Map<String, Object> map = oMapper.convertValue(parameters, Map.class);
 		System.out.println("Endpoint received request : " + map);
-		StreetAddressResponse response = factory.createStreetAddressResponse();
-		response.getReturn().addAll(addressList());
+		
+		String addressLine1Text = parameters.getAddressLine1Text();
+		ObjectFactory factory = new ObjectFactory();
+		StreetAddressResponse response = factory.createStreetAddressResponse();		
+		if(addressLine1Text.contains(DEFAULT_SEARCH_VALUE)){
+			response.getReturn().addAll(addressList());
+		}
 		return response;
 	}
 	
+	
+	@Override
+	public StreetAddressIdResponse findAddressById(StreetAddressIdRequest parameters,
+												   StandardInputHeader charterHeaderInput) throws EnterpriseAddressServiceException {
+		if(parameters == null || parameters.getAddressId() == null)
+			throw new EnterpriseAddressServiceException("StreetAddressIdRequest/Address Id  cannot be null.");
+		
+		
+		List<StreetAddress> addresses = addressList();
+		StreetAddress foundAddress = null;
+    	for(StreetAddress address : addresses){
+    		if (new Long(parameters.getAddressId()).equals(address.getId())) {
+    			foundAddress = address;
+    			break;                
+            }
+    	} 
+    	
+    	if(foundAddress == null){
+    		throw new EnterpriseAddressServiceException("Address with " + parameters.getAddressId() + " does not exist");
+    	}
+    	
+    	StreetAddressIdResponse streetAddressIdResponse = new ObjectFactory().createStreetAddressIdResponse();
+    	streetAddressIdResponse.setStreetAddress(foundAddress);
+    	return streetAddressIdResponse;
+	}
 	
 	/**
 	 * 
@@ -38,7 +74,7 @@ public class EnterpriseAddressDataServiceImpl implements  EnterpriseAddressDataS
 		List<StreetAddress> streetAddressList = new ArrayList<StreetAddress>();
 		
 		StreetAddress streetAddress = new StreetAddress();
-		streetAddress.setId(new Long(167));
+		streetAddress.setId(new Long(1));
 		streetAddress.setSourceSystemAddressId("a566h");
 		streetAddress.setType("Service");
 		streetAddress.setServiceabilityMatch("Exact");
@@ -168,5 +204,5 @@ public class EnterpriseAddressDataServiceImpl implements  EnterpriseAddressDataS
 		streetAddressList.add(streetAddress);
 		
 		return streetAddressList;
-	}	
+	}		
 }

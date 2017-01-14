@@ -19,13 +19,19 @@ public class SpringCxfApplicationTest {
     private SoapClient soapClient;
 
     @Test
-    public void testAddresses() {
+    public void testGetAddresses() {
 
         assertThat(soapClient.findAddresses()).isEqualTo("success");
     }
     
     @Test
-    public void testServiceAbilityByPostalCode() {
+    public void testGetAddressbyId() {
+
+        assertThat(soapClient.findAddressById()).isEqualTo("success");
+    }
+    
+    @Test
+    public void testGetServiceAbilityByPostalCode() {
 
         assertThat(soapClient.findServiceabilityByPostalCode()).isEqualTo("success");
     }

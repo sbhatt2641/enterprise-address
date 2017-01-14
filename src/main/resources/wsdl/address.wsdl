@@ -55,7 +55,9 @@
 	  <xsd:import namespace="com/maxopus/enterprise/services/common"/>
 	  	  		   
 	  <xs:element name="addressRequest" type="address:StreetAddressRequest"/>
-	  <xs:element name="addressResponse" type="address:StreetAddressResponse"/>  
+	  <xs:element name="addressResponse" type="address:StreetAddressResponse"/>
+	  <xs:element name="addressIdRequest" type="address:StreetAddressIdRequest"/> 
+	  <xs:element name="addressIdResponse" type="address:StreetAddressIdResponse"/> 
 	  <xs:element name="addressServiceException" type="address:AddressServiceException"/>
 	  
 	  <xs:complexType abstract="true" name="address">
@@ -79,12 +81,24 @@
 		  <xs:element minOccurs="0" name="addressLine3Text" type="xs:string"/>
 		  <xs:element minOccurs="0" name="cityName" type="xs:string"/>
 		  <xs:element minOccurs="0" name="territory" type="xs:string"/>
-		  <xs:element name="zipCode" type="xs:string"/>		  
+		  <xs:element name="zipCode" type="xs:string"/>
+		  <xs:element minOccurs="0" name="addressId" type="xs:string"/>		  		  
+		</xs:sequence>
+	  </xs:complexType>
+	  <xs:complexType name="StreetAddressIdRequest">
+		<xs:sequence>
+		  <xs:element minOccurs="0" name="addressId" type="xs:string"/>		  		  
 		</xs:sequence>
 	  </xs:complexType>
 	  <xs:complexType name="StreetAddressResponse">
 		<xs:sequence>
 		  <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="address:streetAddress"/>
+		  <xs:element minOccurs="0" name="charterHeaderOutput" type="common:StandardOutputHeader"/>
+		</xs:sequence>
+	  </xs:complexType>
+	  <xs:complexType name="StreetAddressIdResponse">
+		<xs:sequence>
+		  <xs:element minOccurs="0" name="streetAddress" type="address:streetAddress"/>
 		  <xs:element minOccurs="0" name="charterHeaderOutput" type="common:StandardOutputHeader"/>
 		</xs:sequence>
 	  </xs:complexType>
@@ -190,6 +204,13 @@
   <wsdl:message name="addressReq">
     <wsdl:part element="address:addressRequest" name="parameters"></wsdl:part>
     <wsdl:part element="common:charterHeaderInputInfo" name="charterHeaderInput"></wsdl:part>
+  </wsdl:message> 
+  <wsdl:message name="addressIdReq">
+    <wsdl:part element="address:addressIdRequest" name="parameters"></wsdl:part>
+    <wsdl:part element="common:charterHeaderInputInfo" name="charterHeaderInput"></wsdl:part>
+  </wsdl:message> 
+  <wsdl:message name="addressIdRes">
+    <wsdl:part element="address:addressIdResponse" name="parameters"></wsdl:part>
   </wsdl:message>
   <wsdl:message name="serviceabilityByPostalCodeReq">
     <wsdl:part element="serviceability:serviceabilityByPostalCodeRequest" name="parameters"></wsdl:part>
@@ -204,6 +225,11 @@
     <wsdl:operation name="findAddresses">
       <wsdl:input message="tns:addressReq" name="addressReq"></wsdl:input>
       <wsdl:output message="tns:addressRes" name="addressRes"></wsdl:output>
+      <wsdl:fault message="tns:EnterpriseAddressServiceException" name="enterpriseAddressServiceException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="findAddressById">
+      <wsdl:input message="tns:addressIdReq" name="addressIdReq"></wsdl:input>
+      <wsdl:output message="tns:addressIdRes" name="addressIdRes"></wsdl:output>
       <wsdl:fault message="tns:EnterpriseAddressServiceException" name="enterpriseAddressServiceException"></wsdl:fault>
     </wsdl:operation>   
   </wsdl:portType>
@@ -223,6 +249,19 @@
         <soap:body parts="parameters" use="literal"/>
       </wsdl:input>
       <wsdl:output name="addressRes">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="enterpriseAddressServiceException">
+        <soap:fault name="tns:EnterpriseAddressServiceException" use="literal"/>
+      </wsdl:fault>   
+    </wsdl:operation>
+    <wsdl:operation name="findAddressById">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addressIdReq">
+        <soap:header message="tns:addressIdReq" part="charterHeaderInputInfo" use="literal"></soap:header>
+        <soap:body parts="parameters" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addressIdRes">
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="enterpriseAddressServiceException">
